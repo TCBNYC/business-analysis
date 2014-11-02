@@ -1,0 +1,114 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>seed-element Demo</title>
+
+  <script src="../platform/platform.js"></script>
+  <link rel="import" href="../core-ajax/core-ajax.html">
+  <link rel="import" href="../polymer-jsonp/polymer-jsonp.html">
+  <link rel="import" href="seed-element.html">
+
+</head>
+<body unresolved>
+
+  <!-- <p>An example of using <code>&lt;seed-element></code>:</p> -->
+  <p>yelp business analysis</p>
+
+<!--
+
+ <polymer-jsonp 
+url="//business-analysis-1.appspot.com/page1"
+         response="{{data}}"></polymer-jsonp>
+
+<template is="auto-binding">
+    <div>{{data}}</div>
+  </template>
+  <seed-element>
+    <h2>Hello seed-element</h2>
+  </seed-element>
+
+ <script>
+    document.addEventListener('polymer-ready', function() {
+      var jsonp = document.querySelector("polymer-jsonp");
+      jsonp.addEventListener("polymer-response", 
+        function(e) {
+          document.querySelector('template').model = {
+            data: e.detail.response[0]
+          };
+        }
+      );
+    });
+  </script>
+-->
+
+<core-ajax
+auto
+url="//business-analysis-1.appspot.com/page1"
+params='{"input1":"computer", "alt":"json", "q":"chrome"}'
+handleAs="json"
+on-core-response="{{handleResponse}}"></core-ajax>
+
+<!-- <template repeat="{{item in response.categories}} is="auto-binding"> <div>QQQ: {{item}}</div> </template> -->
+<!-- <template is="auto-binding"> <div>QQQ: {{response}}</div> </template> -->
+<!-- <template is="auto-binding" > <div>QQQ: {{response.categories}}</div> </template> -->
+<!-- <template is="auto-binding" repeat="{{item in response.categories[0]}}" > <div>QQQ: {{item}}<br/></div> </template> -->
+<!-- <template is="auto-binding" repeat="{{item in response.categories[0]}}" > <div>QQQ: {{item}}<br/></div> </template> -->
+<template is="auto-binding"> <div>Criteria: 
+{{response.categories[0]}}<br/>
+<fieldset>
+<legend>
+{{response.name}}<br/>
+{{response.display_phone}}<br/>
+{{response.location}}<br/>
+<a href="{{response.mobile_url}}">link</a><br/>
+</legend>
+<template repeat="{{review in response.reviews}}">
+<img src="{{review.rating_image_url}}"/>
+{{review.excerpt}}<br/>
+</template>
+</div> 
+</fieldset>
+</template>
+
+
+
+  <script>
+  /*
+  function handleResponse(x){
+  console.log('qqq: ' + x)
+  }
+  */
+
+    document.addEventListener('polymer-ready', function() {
+      var ajax = document.querySelector("core-ajax");
+      ajax.addEventListener("core-response", 
+        function(e) {
+        console.log(e.detail.response.categories)
+        console.log(e.detail.response['is_claimed'])
+        console.log(e.detail.response)
+          document.querySelector('template').model = {
+            response: e.detail.response
+            //response: e.detail.response['is_claimed']
+          };
+        }
+      );
+      ajax.addEventListener("core-error", 
+        function(e) {
+        console.log(e)
+        }
+      );
+    });
+  </script>
+
+</body>
+</html>

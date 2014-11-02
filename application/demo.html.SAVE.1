@@ -1,0 +1,78 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>seed-element Demo</title>
+
+  <script src="../platform/platform.js"></script>
+  <link rel="import" href="../core-ajax/core-ajax.html">
+  <link rel="import" href="seed-element.html">
+
+</head>
+<body unresolved>
+
+  <p>An example of using <code>&lt;seed-element></code>:</p>
+  <p>yelp business analysis</p>
+
+<!--
+<core-ajax
+auto
+url="//gdata.youtube.com/feeds/api/videos/"
+params='{"alt":"json", "q":"chrome"}'
+handleAs="json"
+on-core-response="{{handleResponse}}"></core-ajax>
+
+<template repeat="{{response.feed.entry}}">
+    <div>{{title.$t}}</div>
+  </template>
+-->
+
+<!--
+<core-ajax
+auto
+url="//business-analysis-1.appspot.com/page1"
+params='{"alt":"json", "q":"chrome"}'
+handleAs="json"
+on-core-response="{{handleResponse}}"></core-ajax>
+
+     url="https://clients1.google.com/finance/info?q=GOOG&client=ig&callback="
+-->
+<!-- -->
+     <polymer-jsonp 
+url="//business-analysis-1.appspot.com/page1"
+         response="{{data}}"></polymer-jsonp>
+
+<template is="auto-binding">
+    <div>{{data}}</div>
+  </template>
+<!-- -->
+
+ <!--  
+  <script>
+    document.addEventListener('polymer-ready', function() {
+      var ajax = document.querySelector("core-ajax");
+      ajax.addEventListener("core-response", 
+        function(e) {
+          document.querySelector('template').model = {
+            response: e.detail.response
+          };
+        }
+      );
+    });
+  </script>
+-->
+  <seed-element>
+    <h2>Hello seed-element</h2>
+  </seed-element>
+
+</body>
+</html>
